@@ -1,0 +1,6 @@
+1|img/capa1.jpg|Hokuto no Ken Vol.1|Volume 1 do mangá.|25.99
+2|img/capa2.jpg|Hokuto no Ken Vol.2|Volume 2 do mangá.|26.99
+3|img/capa3.jpg|Hokuto no Ken Vol.3|Volume 3 do mangá.|24.99
+4|img/capa4.jpg|Hokuto no Ken Vol.4|Volume 4 do mangá.|22.99
+5|img/capa5.jpg|Hokuto no Ken Vol.5|Volume 5 do mangá.|27.99
+6|img/capa6.jpg|Hokuto no Ken Vol.6|Volume 6 do mangá.|21.99

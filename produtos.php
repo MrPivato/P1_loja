@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>IFRS BG</title>
@@ -11,7 +11,7 @@
 			<h1>Site de compras do IFRS.</h1>
 			<div class="menu">
 
-				<a href="#">Ver Carrinho</a>
+				<a href="carrinho.php">Ver Carrinho</a>
 				<strong>&nbsp;|&nbsp;</strong>
 				<a href="#">Autor</a>
 
@@ -24,25 +24,34 @@
 			
 			<div class="produtos">
 			
-				<div class="produtinho">
-					<!-- 
-						O produto deve ser lido de
-						um arquivo .txt
-						Ex: 
-							<?php 
-								$ponteiro = fopen ("teste.txt", "r");
-								$linha = fgets($ponteiro, 4096);
-								echo $linha;
-								fclose ($ponteiro);
-
-								//Esse programa lê a primeira linha de um arquivo, exibindo-a na tela.
-
-								//Note que foi utilizado um valor bem alto (4096) para garantir a leitura da linha inteira.
-
-								//Se a função fgets fosse chamada novamente, seria retornada a segunda linha do arquivo, e assim por diante.
-							?>
-					-->
-				</div>
+					<table border="0">
+					<?php
+						$arquivo = fopen('produtos.txt', 'r'); // abre para leitura
+						
+						while (!feof($arquivo)) {// Le oque esta dentro do arquivo 
+							
+							$linha = fgets($arquivo, 1024);//Mostra uma linha do arquivo
+							
+							$produto = explode("|", $linha);//separa os conteúdos desta linha (pelo caractere |) e coloca em um vetor
+							//mostra o produto na tela
+							echo "
+									<tr>
+										<td>
+											<figure>
+												<img name='imagem' src='{$produto[1]}' >
+												<figcaption name='produto'>{$produto[2]}</figcaption>
+											</figure>
+										</td>
+										<td><p>{$produto[3]}</p></td>
+										<td><p>{$produto[4]}</p></td>
+										<td></p><a href='addCarrinho.php?id={$produto[0]}'>Comprar</a></td>
+									</tr>
+							";
+						}
+						// Fecha arquivo aberto
+						fclose($arquivo);
+					?>                   
+					</table>
 
 			</div>
 
