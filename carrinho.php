@@ -2,24 +2,7 @@
 <html>
 	<head>
 		<title>IFRS BG</title>
-		<?php require_once 'inc/site_skin.inc'; ?>
-		<script>
-			var i = 0;
-			function incrementa() {
-				if (true)// !Number.isInteger(i)
-					document.getElementById('inc').value = 0;
-				} else{
-					document.getElementById('inc').value = ++precoFinal;
-				}
-			}
-			function decrementa() {
-				if (i <= 0){ // || !Number.isInteger(i)
-					document.getElementById('inc').value = 0;
-				} else{
-					document.getElementById('inc').value = --precoFinal;
-				}
-			}
-		</script>
+		<?php include_once 'inc/site_skin.inc'; ?>
 	</head>
 	<body>
 
@@ -59,14 +42,15 @@
                             //Verifica pelo id se o produto já está no carrinho de compras
                             if (!in_array($produto[0], $_SESSION['carrinho'])) {
                                 //Adiciona o produto com toda sua descrição no carrinho de compras
-                                //array_push($_SESSION['carrinho'], $produto);
                             }
 
                         }
                         // Fecha arquivo aberto
                         fclose($arquivo);
                     }
-
+					
+					$c = 0;
+					
 					foreach ($_SESSION['carrinho'] as $key => $value) {
 // array("id" => $id, "nome" => $produto[2], "descricao" => $produto[3], "preco" => floatval($produto[4]), "imagem" => $produto[1], "tamanho" => "", "quantidade" => 1, "subtotal" => floatval($produto[4]));
 						echo "
@@ -88,20 +72,25 @@
 											<option value='gg'>GG</option>
 										</select><br>
 											
-										Quantidade: 
-										
-									
+										Quantidade: <input type='number' id='a{$c}' onchange='calcula(e)' value='1'  min='1'></input>
 									</td>
 								</tr>
-							";	
-					}
-					$precoTotal = 0;
-					foreach ($_SESSION['carrinho'] as $key => $value) {
-						$precoTotal += $value['preco'];
+						";
+						
+						$c++;
 						
 					}
-					echo "
-					";
+					$precoTotala = 0;
+					$precoTotal = 0;
+					
+					foreach ($_SESSION['carrinho'] as $key => $value) {
+						$precoTotala += $value['preco'];
+					}
+					
+					foreach ($_SESSION['carrinho'] as $key => $value) {
+						$precoTotal += $value['subtotal'];
+					}
+
                     echo"<pre>";
 						var_dump($_SESSION['carrinho']);    
                     echo"</pre>";
@@ -111,18 +100,29 @@
             <input type="submit" value="Finalizar Compra" name="submit">
 			
             </form>
-			
-			<button onclick='incrementa()'>+</button>
-			<input type='number' id='inc' value='0' disabled></input>
-			<button onclick='decrementa()'>-</button>
-
 			<script>
+			
+				//document.getElementById('inc').value = ++precoFinal;
+				
+				function calcula(e){
+					var caller = e.target || e.srcElement;
+					console.log( caller );
+				}
+				
+				var precoFinala = <?php echo json_encode($precoTotala); ?>;
+				document.write("<h1>Preço Total é: ", precoFinala, " Reais</h1>");
+				
 				var precoFinal = <?php echo json_encode($precoTotal); ?>;
 				document.write("<h1>Preço Total é: ", precoFinal, " Reais</h1>");
 			</script>
-			<input type='button' name='add' onclick='javascript: document.getElementById("qty").value++;' value='+'/>
-			<input type='number' id='qty' value='0' disabled></input>
-			<input type='button' name='subtract' onclick='javascript: document.getElementById("qty").value--;' value='-'/>
+			<script>
+				document.getElementById("fname").addEventListener("change", myFunction);
 
+				function myFunction() {
+					var x = document.getElementById("fname");
+					x.value = x.value.toUpperCase();
+				}
+			</script>
+			
 	</body>
 </html> 

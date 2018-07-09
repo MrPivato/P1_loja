@@ -2,7 +2,8 @@
 <html>
 	<head>
 		<title>IFRS BG</title>
-		<?php require_once 'inc/site_skin.inc'; ?>
+		<?php include_once 'inc/site_skin.inc'; ?>
+		<meta charset="utf-8">
 	</head>
 	<body>
 
