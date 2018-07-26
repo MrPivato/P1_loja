@@ -21,6 +21,7 @@ if (!empty($_GET['id'])) {
         //Vejo os detalhes de cada produto no carrinho
         if ($produto["id"] == $id) {
             $existe = true;
+			echo '<h1>Produto já adicionado!</h1>';
             break;
         }
     }

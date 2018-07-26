@@ -37,3 +37,7 @@ form{
 	margin-right: auto;
 	display: table;
 }
+b{
+	font-size: 30px;
+	color: green;
+}

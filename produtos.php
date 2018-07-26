@@ -44,7 +44,7 @@
 											</figure>
 										</td>
 										<td><p>{$produto[3]}</p></td>
-										<td><p>{$produto[4]}</p></td>
+										<td><p>{$produto[4]} reais</p></td>
 										<td></p><a href='addCarrinho.php?id={$produto[0]}'>Comprar</a></td>
 									</tr>
 							";

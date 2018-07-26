@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html>
 	<head>
 		<title>IFRS BG</title>
@@ -18,14 +18,14 @@
 
 		<br clear="all">
 
-		<form method="POST" action="finalizarcompra.php">
+		<form method="POST" action="finalizarcompra.php" name="comprar">
 			<table border="0">
                 <?php
 
-                    //Inicia a sessão
+                    //Inicia a sessÃ£o
                     session_start();
 
-                    //verifica se o carrinho de compras está vazio
+                    //verifica se o carrinho de compras estÃ¡ vazio
                     if (empty($_SESSION['carrinho'])) {
                         //cria um carrinho de compras vazio
                         $_SESSION['carrinho'] = [];
@@ -33,15 +33,15 @@
                         
                         // Abre o Arquivo no Modo r (para leitura)
                         $arquivo = fopen('produtos.txt', 'r');
-                        // Lê o conteúdo do arquivo 
+                        // LÃª o conteÃºdo do arquivo 
                         while (!feof($arquivo)) {
                             //Mostra uma linha do arquivo
                             $linha = fgets($arquivo, 1024);
-                            //separa os conteúdos desta linha (pelo caractere |) e coloca em um vetor
+                            //separa os conteÃºdos desta linha (pelo caractere |) e coloca em um vetor
                             $produto = explode("|", $linha);
-                            //Verifica pelo id se o produto já está no carrinho de compras
+                            //Verifica pelo id se o produto jÃ¡ estÃ¡ no carrinho de compras
                             if (!in_array($produto[0], $_SESSION['carrinho'])) {
-                                //Adiciona o produto com toda sua descrição no carrinho de compras
+                                //Adiciona o produto com toda sua descriÃ§Ã£o no carrinho de compras
                             }
 
                         }
@@ -49,7 +49,7 @@
                         fclose($arquivo);
                     }
 					
-					$c = 0;
+					$c = 1;
 					
 					foreach ($_SESSION['carrinho'] as $key => $value) {
 // array("id" => $id, "nome" => $produto[2], "descricao" => $produto[3], "preco" => floatval($produto[4]), "imagem" => $produto[1], "tamanho" => "", "quantidade" => 1, "subtotal" => floatval($produto[4]));
@@ -62,17 +62,16 @@
 										</figure>
 									</td>
 									<td><p>{$value['descricao']}</p></td>
-									<td><p>Preço: {$value['preco']} Reais</p></td>
+									<td><p>PreÃ§o: {$value['preco']} Reais</p></td>
 									<td>
-										Tamanho: <select>
+										Tamanho: <select name='select{$c}'>
 											<option value='pp'>PP</option>
 											<option value='p'>P</option>
 											<option value='m'>M</option>
 											<option value='g'>G</option>
 											<option value='gg'>GG</option>
 										</select><br>
-											
-										Quantidade: <input type='number' id='a{$c}' onchange='calcula(e)' value='1'  min='1'></input>
+										Quantidade: <input name='quant{$c}' id='{$c}' type='number' onchange='calcula({$value['preco']}, this.id, this.value)' value='1'  min='1' step='1'>	
 									</td>
 								</tr>
 						";
@@ -80,48 +79,65 @@
 						$c++;
 						
 					}
-					$precoTotala = 0;
+
 					$precoTotal = 0;
-					
-					foreach ($_SESSION['carrinho'] as $key => $value) {
-						$precoTotala += $value['preco'];
-					}
 					
 					foreach ($_SESSION['carrinho'] as $key => $value) {
 						$precoTotal += $value['subtotal'];
 					}
 
                     echo"<pre>";
-						var_dump($_SESSION['carrinho']);    
+					var_dump($_SESSION['carrinho']);    
                     echo"</pre>";
                 ?>
 			</table>
 			
-            <input type="submit" value="Finalizar Compra" name="submit">
+				<input type="submit" value="Finalizar Compra" name="submit">
 			
-            </form>
+        </form>
+		
+		<div>
+			<b>PreÃ§o total: </b>
+			<b id="total"><?php echo $precoTotal; ?></b>
+			<b>Reais</b>
+		</div>
+		
 			<script>
 			
-				//document.getElementById('inc').value = ++precoFinal;
+				var subtotal = 0; //var com o subtotal de um produto
+				var totalVet = new Array(); // vetor como subtotal de todos produtos do carrinho, com a quantia modificada
 				
-				function calcula(e){
-					var caller = e.target || e.srcElement;
-					console.log( caller );
+				var totalPhp = <?php echo json_encode($precoTotal); ?>;
+				
+				totalVet[0] = totalPhp;
+				
+				function calcula(preco, id, quantia){
+					
+					parseFloat(preco);
+					parseInt(quantia);
+					
+					if (quantia == 1){
+						subtotal = 0;
+					} else{
+						subtotal = preco * quantia;
+					}
+					
+					totalVet[id] = subtotal;
+					
+					console.log(preco, id);
+					
+					dindin(subtotal);
 				}
 				
-				var precoFinala = <?php echo json_encode($precoTotala); ?>;
-				document.write("<h1>Preço Total é: ", precoFinala, " Reais</h1>");
-				
-				var precoFinal = <?php echo json_encode($precoTotal); ?>;
-				document.write("<h1>Preço Total é: ", precoFinal, " Reais</h1>");
-			</script>
-			<script>
-				document.getElementById("fname").addEventListener("change", myFunction);
-
-				function myFunction() {
-					var x = document.getElementById("fname");
-					x.value = x.value.toUpperCase();
+				function dindin(total){
+					
+					var soma = 0;
+					for(var i in totalVet) { soma += totalVet[i]; }
+					
+					document.getElementById('total').innerHTML = soma;
 				}
+				
+				
 			</script>
 			
 	</body>
