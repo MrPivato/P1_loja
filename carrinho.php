@@ -119,7 +119,7 @@
 					if (quantia == 1){
 						subtotal = 0;
 					} else{
-						subtotal = preco * quantia;
+						subtotal = preco * --quantia; // --, para nao fazer o cliente pgar por um produto a mais
 					}
 					
 					totalVet[id] = subtotal;
@@ -134,7 +134,7 @@
 					var soma = 0;
 					for(var i in totalVet) { soma += totalVet[i]; }
 					
-					document.getElementById('total').innerHTML = soma;
+					document.getElementById('total').innerHTML = soma.toFixed(2);
 				}
 				
 				
