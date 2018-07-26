@@ -70,7 +70,8 @@
 											<option value='m'>M</option>
 											<option value='g'>G</option>
 											<option value='gg'>GG</option>
-										</select><br>
+										</select>
+										<br>
 										Quantidade: <input name='quant{$c}' id='{$c}' type='number' onchange='calcula({$value['preco']}, this.id, this.value)' value='1'  min='1' step='1'>	
 									</td>
 								</tr>
@@ -91,7 +92,8 @@
                     echo"</pre>";
                 ?>
 			</table>
-			
+				
+				<input name='totalCompra' id='totalC' type='hidden' value='<?php echo $precoTotal; ?>'>
 				<input type="submit" value="Finalizar Compra" name="submit">
 			
         </form>
@@ -135,6 +137,7 @@
 					for(var i in totalVet) { soma += totalVet[i]; }
 					
 					document.getElementById('total').innerHTML = soma.toFixed(2);
+					document.getElementById("totalC").value = soma.toFixed(2);
 				}
 				
 				

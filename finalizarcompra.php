@@ -10,10 +10,25 @@
         
             session_start();
         
+			array_pop($_POST);
+			
+			foreach ($_POST as $key => $v) {
+				$dif[] = $v;
+			}
+		
+			array_pop($dif);
+			
+			var_dump($dif);
+		
+			$_SESSION['dif'] = $dif;
+			$_SESSION['totalCompra'] = $_POST['totalCompra'];
+		
+			echo '<pre>';
             var_dump($_POST);
             echo '<hr>';
             var_dump($_SESSION);
             echo '<hr>';
+			echo '</pre>';
             
             
         ?>
