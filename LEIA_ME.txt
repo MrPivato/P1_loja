@@ -1,0 +1,4 @@
+Talvez seja necessário aumentar o tempo de timeout no php.ini,
+pois ao mandar os anexos, o servidor corta a conexão, por levar muito tempo.
+
+Link para resolver o ocorrido: https://github.com/PHPMailer/PHPMailer/issues/853

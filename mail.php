@@ -3,7 +3,7 @@
 session_start();
 
 $dif = $_SESSION['dif'];
-var_dump($dif);
+//var_dump($dif);
 
 function geraHtml($dif){
 	
@@ -36,9 +36,8 @@ function geraHtml($dif){
 							<td>
 								Tamanho: {$dif[$c]}
 								<br>
-								Quantidade: {$dif[++$c]}
-								<h2>Subtotal: </h2>
-								<b id='a{$c}'>{$dif[++$c]} Reais</b>
+								Quantidade: {$dif[++$c]},
+								<b>Subtotal: <u>{$dif[++$c]} Reais</u> </b>
 								<hr>
 							</td>
 						</tr>
@@ -82,8 +81,15 @@ function geraHtml($dif){
 
 	return '<table>' . $finalHtml . '</table>' . $dadosCompradorHtml;
 }
-
-
+/*
+echo '<pre>';
+echo '<hr>';
+var_dump($_SESSION);
+echo '<hr>';
+var_dump($_POST);
+echo '<hr>';
+echo '</pre>';
+*/
 // inclui os arquivos do phpmailer
 include_once ('phpmailer/Exception.php');
 include_once ('phpmailer/PHPMailer.php');
@@ -93,23 +99,15 @@ include_once ('phpmailer/POP3.php');
 
 //----------------------------------------------------------------
 // vars para fazer a vida mais facil
-// soh mude aqui uma vez e seja feliz
-echo '<pre>';
-echo '<hr>';
-var_dump($_SESSION);
-echo '<hr>';
-var_dump($_POST);
-echo '<hr>';
-echo '</pre>';
+// adicione os dados do seu email para funcionar
 
-$quemManda = 'pivatogabriel@gmail.com';  // seu email          
+$quemManda = '';                         // seu email          
 $nomeManda = 'IFRS BG Compras';          // seu nome
 $senha = '';                             // sua senha
 $quemRecebe = $_POST['email'];           // email de quem recebe
 $nomeRecebe = $_POST['nome'];            // nome de quem recebe
 $assuntoMsg = 'Compra efetuada com sucesso!' ;     // assunto do email
 $corpoMsg = geraHtml($dif);              // corpo geral
-$corpoAlt = geraHtml($dif);              // soh texto
 //----------------------------------------------------------------
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -140,8 +138,7 @@ $mail->CharSet = 'UTF-8';    // Charset da mensagem (opcional)
 
 // Define a mensagem (Texto e Assunto)
 $mail->Subject = $assuntoMsg;  // Assunto da msg
-$mail->Body = $corpoMsg;       // corpo da msg
-$mail->AltBody = $corpoAlt;    // corpo (soh texto)
+$mail->Body = $corpoMsg;       // corpo da msg	
 
 // Define os anexos
 foreach ($_SESSION['carrinho'] as $key => $value) {

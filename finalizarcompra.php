@@ -5,6 +5,10 @@
         <?php include 'inc/site_skin.inc'; ?>
     </head>
     <body>
+	
+		<header>
+			<h1>Finalizar compras do IFRS.</h1>
+		</header>
 
         <?php
         

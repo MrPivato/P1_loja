@@ -7,7 +7,6 @@
 	<body>
 
 		<header>
-			<!-- Dps fazer com include -->
 			<h1>Carrinho de compras do IFRS.</h1>
 			<div class="menu">
 
