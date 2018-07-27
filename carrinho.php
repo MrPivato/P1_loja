@@ -52,7 +52,6 @@
 					$c = 1;
 					
 					foreach ($_SESSION['carrinho'] as $key => $value) {
-// array("id" => $id, "nome" => $produto[2], "descricao" => $produto[3], "preco" => floatval($produto[4]), "imagem" => $produto[1], "tamanho" => "", "quantidade" => 1, "subtotal" => floatval($produto[4]));
 						echo "
 								<tr>
 									<td>
@@ -65,14 +64,18 @@
 									<td><p>Preço: {$value['preco']} Reais</p></td>
 									<td>
 										Tamanho: <select name='select{$c}'>
-											<option value='pp'>PP</option>
-											<option value='p'>P</option>
-											<option value='m'>M</option>
-											<option value='g'>G</option>
-											<option value='gg'>GG</option>
+											<option value='PP'>PP</option>
+											<option value='P'>P</option>
+											<option value='M'>M</option>
+											<option value='G'>G</option>
+											<option value='GG'>GG</option>
 										</select>
 										<br>
 										Quantidade: <input name='quant{$c}' id='{$c}' type='number' onchange='calcula({$value['preco']}, this.id, this.value)' value='1'  min='1' step='1'>	
+										<hr>
+										<h2>Subtotal: </h2>
+										<b id='a{$c}'>{$value['preco']} Reais</b>
+										<input type='hidden' name='subtot{$c}' id='aa{$c}' value='{$value['preco']}'>
 									</td>
 								</tr>
 						";
@@ -87,14 +90,14 @@
 						$precoTotal += $value['subtotal'];
 					}
 
-                    echo"<pre>";
-					var_dump($_SESSION['carrinho']);    
-                    echo"</pre>";
+                    //echo"<pre>";
+					//var_dump($_SESSION['carrinho']);    
+                    //echo"</pre>";
                 ?>
 			</table>
 				
-				<input name='totalCompra' id='totalC' type='hidden' value='<?php echo $precoTotal; ?>'>
-				<input type="submit" value="Finalizar Compra" name="submit">
+			<input name='totalCompra' id='totalC' type='hidden' value='<?php echo $precoTotal; ?>'>
+			<input type="submit" value="Finalizar Compra" name="submit">
 			
         </form>
 		
@@ -118,17 +121,18 @@
 					parseFloat(preco);
 					parseInt(quantia);
 					
-					if (quantia == 1){
-						subtotal = 0;
-					} else{
-						subtotal = preco * --quantia; // --, para nao fazer o cliente pgar por um produto a mais
-					}
+					subtotal = preco * --quantia; // --, para nao fazer o cliente pagar por um produto a mais
 					
 					totalVet[id] = subtotal;
 					
-					console.log(preco, id);
+					//console.log(preco, id);
 					
 					dindin(subtotal);
+					
+					subtotal = preco * ++quantia;
+					
+					document.getElementById('a' + id).innerHTML = subtotal.toFixed(2) + ' Reais';
+					document.getElementById('aa' + id).value= subtotal.toFixed(2);
 				}
 				
 				function dindin(total){
@@ -139,7 +143,6 @@
 					document.getElementById('total').innerHTML = soma.toFixed(2);
 					document.getElementById("totalC").value = soma.toFixed(2);
 				}
-				
 				
 			</script>
 			

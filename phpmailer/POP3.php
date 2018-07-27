@@ -59,7 +59,7 @@ class POP3
      *
      * @var int
      */
-    const DEFAULT_TIMEOUT = 30;
+    const DEFAULT_TIMEOUT = 120;
 
     /**
      * Debug display level.

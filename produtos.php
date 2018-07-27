@@ -14,7 +14,7 @@
 
 				<a href="carrinho.php">Ver Carrinho</a>
 				<strong>&nbsp;|&nbsp;</strong>
-				<a href="#">Autor</a>
+				<a href="autor.php">Autor</a>
 
 			</div>
 		</header>

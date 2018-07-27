@@ -1,4 +1,88 @@
-<?php
+Ôªø<?php
+
+session_start();
+
+$dif = $_SESSION['dif'];
+var_dump($dif);
+
+function geraHtml($dif){
+	
+	$finalHtml = '';
+	if (empty($_SESSION['carrinho'])) {
+		$_SESSION['carrinho'] = [];
+	}else{                
+		$arquivo = fopen('produtos.txt', 'r');
+		while (!feof($arquivo)) {
+			$linha = fgets($arquivo, 1024);
+			$produto = explode("|", $linha);
+			if (!in_array($produto[0], $_SESSION['carrinho'])) {}
+			
+		}
+		fclose($arquivo);
+	}
+		
+	$c = 0;
+		
+	foreach ($_SESSION['carrinho'] as $key => $value) {
+		$produtoHtml = "
+						<tr>
+							<td>
+								<figure>
+									<figcaption name='produto'>{$value['nome']}</figcaption>
+								</figure>
+							</td>
+							<td><p>{$value['descricao']}</p></td>
+							<td><p>Pre√ßo: {$value['preco']} Reais</p></td>
+							<td>
+								Tamanho: {$dif[$c]}
+								<br>
+								Quantidade: {$dif[++$c]}
+								<h2>Subtotal: </h2>
+								<b id='a{$c}'>{$dif[++$c]} Reais</b>
+								<hr>
+							</td>
+						</tr>
+		";
+		$finalHtml .= $produtoHtml;
+		$c++;	
+	}
+	
+	$dadosCompradorHtml = "
+		<hr>
+		<div>
+			<h1>Nome: </h1>
+			<p>{$_POST['nome']}</p>
+			<hr>
+			<h1>E-mail: </h1>
+			<p>{$_POST['email']}</p>
+			<hr>
+			<h1>Cidade: </h1>
+			<p>{$_POST['cidade']}</p>
+			<hr>
+			<h1>Endere√ßo: </h1>
+			<p>{$_POST['endereco']}</p>
+			<hr>
+			<h1>CEP: </h1>
+			<p>{$_POST['cep']}</p>
+			<hr>
+			<h1>Operadora: </h1>
+			<p>{$_POST['oper']}</p>
+			<hr>
+			<h1>Cart√£o: </h1>
+			<p>{$_POST['cartao']}</p>
+			<hr>
+			<h1>C√≥digo: </h1>
+			<p>{$_POST['number']}</p>
+			<hr>
+			<h1>Pre√ßo total: </h1>
+			<h2>{$_SESSION['totalCompra']} Reais</h2>
+		</div>
+		<hr>
+	";
+
+	return '<table>' . $finalHtml . '</table>' . $dadosCompradorHtml;
+}
+
 
 // inclui os arquivos do phpmailer
 include_once ('phpmailer/Exception.php');
@@ -10,24 +94,22 @@ include_once ('phpmailer/POP3.php');
 //----------------------------------------------------------------
 // vars para fazer a vida mais facil
 // soh mude aqui uma vez e seja feliz
+echo '<pre>';
+echo '<hr>';
+var_dump($_SESSION);
+echo '<hr>';
+var_dump($_POST);
+echo '<hr>';
+echo '</pre>';
 
 $quemManda = 'pivatogabriel@gmail.com';  // seu email          
-$nomeManda = 'eu';                       // seu nome
+$nomeManda = 'IFRS BG Compras';          // seu nome
 $senha = '';                             // sua senha
-$quemRecebe = 'pivatogabriel@gmail.com'; // email de quem recebe
-$nomeRecebe = 'alguem';                  // nome de quem recebe
-$assuntoMsg = 'Eae cara como vai?' ;     // assunto do email
-$corpoMsg = 'muito massa' ;              // corpo geral
-$corpoAlt = 'pode botar <b>html</b>';    // soh texto
-
-$dirAnex1 = 'img.jpg';                   // caminho do anexo
-$nomeAnex1 = 'imagem.jpg';               // nome de seu anexo
-
-$dirAnex2 = 'img.jpg';                   // caminho do anexo
-$nomeAnex2 = 'imagem.jpg';               // nome de seu anexo
-
-$dirAnex3 = 'img.jpg';                   // caminho do anexo
-$nomeAnex3 = 'imagem.jpg';               // nome de seu anexo
+$quemRecebe = $_POST['email'];           // email de quem recebe
+$nomeRecebe = $_POST['nome'];            // nome de quem recebe
+$assuntoMsg = 'Compra efetuada com sucesso!' ;     // assunto do email
+$corpoMsg = geraHtml($dif);              // corpo geral
+$corpoAlt = geraHtml($dif);              // soh texto
 //----------------------------------------------------------------
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -36,27 +118,24 @@ use PHPMailer\PHPMailer\SMTP;
 // Inicia a classe PHPMailer
 $mail = new PHPMailer();
 
-// Define os dados do servidor e tipo de conex„o
-$mail->IsSMTP();                   // Define que a mensagem ser· SMTP
-$mail->Host = "smtp.gmail.com";    // EndereÁo do servidor SMTP
-$mail->Port = 587;                 // Porta TCP para a conex„o
-$mail->SMTPAutoTLS = true;         // Utiliza TLS Automaticamente se disponÌvel
-$mail->SMTPAuth = true;            // Usar autenticaÁ„o SMTP - Sim
-$mail->Username = $quemManda;      // Usu·rio de e-mail
-$mail->Password = $senha;          // Senha do usu·rio de e-mail
+// Define os dados do servidor e tipo de conex√£o
+$mail->IsSMTP();                   // Define que a mensagem ser√° SMTP
+$mail->Host = "smtp.gmail.com";    // Endere√ßo do servidor SMTP
+$mail->Port = 587;                 // Porta TCP para a conex√£o
+$mail->SMTPAutoTLS = true;         // Utiliza TLS Automaticamente se dispon√≠vel
+$mail->SMTPAuth = true;            // Usar autentica√ß√£o SMTP - Sim
+$mail->Username = $quemManda;      // Usu√°rio de e-mail
+$mail->Password = $senha;          // Senha do usu√°rio de e-mail
 
-// Define o remetente (vocÍ)
+// Define o remetente (voc√™)
 $mail->From = $quemManda;      // Seu e-mail
 $mail->FromName = $nomeManda;  // Seu nome
 
-// Define os destinat·rio(s)
-$mail->AddAddress($quemRecebe, $nomeRecebe);                  // Os campos podem ser substituidos por vari·veis
-//$mail->AddAddress('webmaster@nomedoseudominio.com');        // Caso queira receber uma copia
-//$mail->AddCC('ciclano@site.net', 'Ciclano');                // Copia
-//$mail->AddBCC('fulano@dominio.com.br', 'Fulano da Silva');  // CÛpia Oculta
+// Define os destinat√°rio(s)
+$mail->AddAddress($quemRecebe, $nomeRecebe);                  // Os campos podem ser substituidos por vari√°veis
 
-// Define os dados tÈcnicos da Mensagem
-$mail->IsHTML(true);         // Define que o e-mail ser· enviado como HTML
+// Define os dados t√©cnicos da Mensagem
+$mail->IsHTML(true);         // Define que o e-mail ser√° enviado como HTML
 $mail->CharSet = 'UTF-8';    // Charset da mensagem (opcional)
 
 // Define a mensagem (Texto e Assunto)
@@ -64,14 +143,16 @@ $mail->Subject = $assuntoMsg;  // Assunto da msg
 $mail->Body = $corpoMsg;       // corpo da msg
 $mail->AltBody = $corpoAlt;    // corpo (soh texto)
 
-// Define os anexos (opcional)
-$mail->AddAttachment($dirAnex1, $nomeAnex1);   // Insere um anexo
-$mail->AddAttachment($dirAnex2, $nomeAnex2);   // Insere um anexo
-$mail->AddAttachment($dirAnex3, $nomeAnex3);   // Insere um anexo
+// Define os anexos
+foreach ($_SESSION['carrinho'] as $key => $value) {
+	$nomeAnex =  'imagem' . rand(0, 10) . '.img';
+	$mail->AddAttachment($value['imagem'], $nomeAnex);
+}
+//$mail->AddAttachment($dirAnex1, $nomeAnex1);   // Insere um anexo
 // Envia o e-mail
 $enviado = $mail->Send();
 
-// Limpa os destinat·rios e os anexos
+// Limpa os destinat√°rios e os anexos
 $mail->ClearAllRecipients();
 $mail->ClearAttachments();
 
@@ -79,8 +160,8 @@ $mail->ClearAttachments();
 if ($enviado) {
  echo "E-mail enviado com sucesso!";
 } else {
- echo "N„o foi possÌvel enviar o e-mail.";
- echo "<b>InformaÁıes do erro:</b> " . $mail->ErrorInfo;
+ echo "N√£o foi poss√≠vel enviar o e-mail.";
+ echo "<b>Informa√ß√µes do erro:</b> " . $mail->ErrorInfo;
 }
 
 ?>

@@ -1,6 +1,6 @@
-1|img/capa1.jpg|Hokuto no Ken Vol.1|Volume 1 do mang·.|25.99
-2|img/capa2.jpg|Hokuto no Ken Vol.2|Volume 2 do mang·.|26.99
-3|img/capa3.jpg|Hokuto no Ken Vol.3|Volume 3 do mang·.|24.99
-4|img/capa4.jpg|Hokuto no Ken Vol.4|Volume 4 do mang·.|22.99
-5|img/capa5.jpg|Hokuto no Ken Vol.5|Volume 5 do mang·.|27.99
-6|img/capa6.jpg|Hokuto no Ken Vol.6|Volume 6 do mang·.|21.99
+Ôªø1|img/capa1.jpg|Hokuto no Ken Vol.1|Volume 1 do mang√°.|25.99
+2|img/capa2.jpg|Hokuto no Ken Vol.2|Volume 2 do mang√°.|26.99
+3|img/capa3.jpg|Hokuto no Ken Vol.3|Volume 3 do mang√°.|24.99
+4|img/capa4.jpg|Hokuto no Ken Vol.4|Volume 4 do mang√°.|22.99
+5|img/capa5.jpg|Hokuto no Ken Vol.5|Volume 5 do mang√°.|27.99
+6|img/capa6.jpg|Hokuto no Ken Vol.6|Volume 6 do mang√°.|21.99

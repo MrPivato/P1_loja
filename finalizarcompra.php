@@ -10,26 +10,27 @@
         
             session_start();
         
-			array_pop($_POST);
+			array_pop($_POST); // remove o valor "Finalizar"
 			
-			foreach ($_POST as $key => $v) {
-				$dif[] = $v;
+			foreach ($_POST as $key => $v) { // add para a var $dif os diferenciais, 
+				$dif[] = $v; // "Tamanho" e "Quantidade" de todos os produtos no carrinho
 			}
 		
-			array_pop($dif);
+			array_pop($dif); // remove o "preço total"
 			
-			var_dump($dif);
+			//var_dump($dif);
 		
-			$_SESSION['dif'] = $dif;
-			$_SESSION['totalCompra'] = $_POST['totalCompra'];
+			$_SESSION['dif'] = $dif; // add para a session, para poder ser usada depois
+			$_SESSION['totalCompra'] = $_POST['totalCompra']; // add para a session o valor total da compra
 		
+		/*
 			echo '<pre>';
             var_dump($_POST);
             echo '<hr>';
             var_dump($_SESSION);
             echo '<hr>';
 			echo '</pre>';
-            
+        */
             
         ?>
         
@@ -42,9 +43,9 @@
                 Cidade: 
                 <select name="cidade" required>
                 
-                    <option selected name="city" value="bento">Bento Gonçalves</option>
-                    <option name="city" value="caxias">Caxias do Sul</option>
-                    <option name="city" value="roma">Roma</option>
+                    <option selected name="city" value="Bento Gonçalves">Bento Gonçalves</option>
+                    <option name="city" value="Caxias do Sul">Caxias do Sul</option>
+                    <option name="city" value="Roma">Roma</option>
                 
                 </select><br>
                 Endereço: <input type="text" name="endereco" required><br>
@@ -54,8 +55,8 @@
                 
                 <h2>Dados do Pagamento</h2>
                 
-                Operadora:  <input type="radio" name="oper" value="visa" required>Visa
-                            <input type="radio" name="oper" value="mastercard" required>Mastercard<br>
+                Operadora:  <input type="radio" name="oper" value="Visa" required>Visa
+                            <input type="radio" name="oper" value="Mastercard" required>Mastercard<br>
                 
                 Cartão: <input type="text" name="cartao" required><br>
                 Código: <input type="number" name="number" required><br>
