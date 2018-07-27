@@ -99,7 +99,8 @@ include_once ('phpmailer/POP3.php');
 
 //----------------------------------------------------------------
 // vars para fazer a vida mais facil
-// adicione os dados do seu email para funcionar
+
+// ****adicione os dados do seu email para funcionar, (email e senha)****
 
 $quemManda = '';                         // seu email          
 $nomeManda = 'IFRS BG Compras';          // seu nome

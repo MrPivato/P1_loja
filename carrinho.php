@@ -25,9 +25,11 @@
                     session_start();
 
                     //verifica se o carrinho de compras está vazio
+					// se sim, volta para produtos.php
                     if (empty($_SESSION['carrinho'])) {
-                        //cria um carrinho de compras vazio
-                        $_SESSION['carrinho'] = [];
+						echo '<h1>Carrinho vazio!</h1>';
+                        echo '<h1>Compre algo para mostrar em seu carrinho!</h1>';
+						exit(); 
                     }else{
                         
                         // Abre o Arquivo no Modo r (para leitura)
